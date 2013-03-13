@@ -1,8 +1,21 @@
 from zope.app.form.browser.widget import SimpleInputWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+try:
+    import plone.app.upgrade
+    from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+except ImportError:
+    from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.formlib import form
-from zope.formlib.widget import BrowserWidget, InputWidget
-from zope.component import getAdapter
+try:
+    from zope.formlib.widget import BrowserWidget
+except ImportError:
+    # Plone 3
+    from zope.app.form.browser import BrowserWidget
+try:
+    from zope.formlib.widget import InputWidget
+except ImportError:
+    # Plone 3
+    from zope.app.form import InputWidget
+
 from collective.portlet.collectionmultiview.interfaces import (
     ICollectionMultiViewRenderer
 )
